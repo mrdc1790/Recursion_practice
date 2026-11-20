@@ -6,20 +6,28 @@ public class factorial {
     public static void main(String args[]){
         Scanner input = new Scanner(System.in);
         System.out.println("Please enter value to enter: ");
+        if (!input.hasNextInt()) {
+            System.err.println("Enter an integer between 0 and 12.");
+            return;
+        }
         int factInput = input.nextInt();
+        if (factInput < 0 || factInput > 12) {
+            System.err.println("Enter an integer between 0 and 12.");
+            return;
+        }
         long startTimeRecursion = System.nanoTime();
         int outputRecursion = factorialUsingRecursion(factInput);
         long endTimeRecursion = System.nanoTime();
         long durationRecursion = (endTimeRecursion - startTimeRecursion);
         long startTimeLoops = System.nanoTime();
-        int outputLoops = factorialUsingRecursion(factInput);
+        int outputLoops = factorialUsingForLoops(factInput);
         long endTimeLoops = System.nanoTime();
         long durationLoops = (endTimeLoops - startTimeLoops);
         long startTimeStreams = System.nanoTime();
-        int outputStream = factorialUsingRecursion(factInput);
+        int outputStream = factorialUsingStreams(factInput);
         long endTimeStreams = System.nanoTime();
         long durationStreams = (endTimeStreams - startTimeStreams);
-        System.out.print("For factorials using Recursion: "+outputRecursion+" and took "+durationRecursion+" nanoseconds.\nFor factorials using loops: "+outputLoops+" and took "+durationLoops+" nanoseconds.\nFor factorials using streams: "+outputStream+" and took "+durationRecursion+" nanoseconds.");
+        System.out.print("For factorials using Recursion: "+outputRecursion+" and took "+durationRecursion+" nanoseconds.\nFor factorials using loops: "+outputLoops+" and took "+durationLoops+" nanoseconds.\nFor factorials using streams: "+outputStream+" and took "+durationStreams+" nanoseconds.");
     }
 
     public static int factorialUsingForLoops(int n){
@@ -34,8 +42,8 @@ public class factorial {
     }
 
     public static int factorialUsingRecursion(int n){
-        if (n==1)
-            return n;
+        if (n <= 1)
+            return 1;
         return n * factorialUsingRecursion(n-1);
     }
 }
